@@ -25,8 +25,19 @@ h3 {
 figure {
   margin: 0;
 }
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
 
-.fake {
-  background-color: aliceblue;
-  letter-spacing: 2px;
+.test {
+  margin-top: 2rem;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-evenly;
 }

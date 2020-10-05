@@ -1,7 +1,13 @@
-import { INCREMENT_AMOUNT, DECREMENT_AMOUNT, CHECKOUT } from '../constants'
+import {
+  INCREMENT_AMOUNT,
+  DECREMENT_AMOUNT,
+  CHECKOUT,
+  REMOVE_PRODUCT,
+  CART_TOTAL
+} from '../constants'
 import { selectIdItem } from '../util'
 
-export default (cart = [], action) => {
+const cartReducer = (cart = [], action) => {
   const { type, id } = action
   switch (type) {
     case INCREMENT_AMOUNT:
@@ -30,6 +36,9 @@ export default (cart = [], action) => {
           return newAmount
         })
       }
+    case REMOVE_PRODUCT:
+      return cart.filter((product) => product.productId !== id)
+
     case CHECKOUT:
       return []
 
@@ -37,3 +46,4 @@ export default (cart = [], action) => {
       return cart
   }
 }
+export default cartReducer

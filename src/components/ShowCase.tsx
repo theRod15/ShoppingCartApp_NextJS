@@ -2,6 +2,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 import Product from './Product'
+import { connect } from 'react-redux'
 
 const StyledDiv = styled.div`
   display: block;
@@ -13,12 +14,24 @@ const StyledDiv = styled.div`
   }
 `
 
-export default function ({ products }) {
+const ShowCase = ({ mapProducts }) => {
+  console.log(mapProducts(), 'from map products')
+
   return (
     <StyledDiv>
-      {products.map((productItem, i) => {
+      {mapProducts().map((productItem, i) => {
         return <Product {...productItem} key={i} />
       })}
     </StyledDiv>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    mapProducts() {
+      return state.products
+    }
+  }
+}
+
+export default connect(mapStateToProps)(ShowCase)

@@ -1,6 +1,6 @@
 import { INCREMENT_STOCK, DECREMENT_STOCK } from '../constants'
 
-export default (stockState = [], action) => {
+const productReducer = (stockState = [], action) => {
   const { type, id } = action
   switch (type) {
     case INCREMENT_STOCK:
@@ -24,3 +24,5 @@ export default (stockState = [], action) => {
       return stockState
   }
 }
+
+export default productReducer

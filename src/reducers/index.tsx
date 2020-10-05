@@ -3,5 +3,7 @@ import cart from './cart'
 import products from './products'
 
 import { combineReducers } from 'redux'
+import loading from './loading'
 
-export default combineReducers({ cart, stock, products })
+const store = combineReducers({ cart, stock, products, loading })
+export default store

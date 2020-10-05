@@ -25,3 +25,12 @@ export function padDigits(pattern, number) {
   const nbs = '&nbs'
   return nbs.repeat(2) + number
 }
+export const computeTotalCart = (store) => {
+  const total = store.cart.reduce((computed, current) => {
+    const product = selectProductItem(store.products, current.productId)
+
+    return computed + product.price * current.amount
+  }, 0)
+
+  return `${total.toFixed(2)} €`
+}
