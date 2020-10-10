@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { incrementAction } from '../actions'
 import { useDispatch } from 'react-redux'
+
 const StyledDiv = styled.div`
   text-align: center;
   background: rgb(250 251 253);
@@ -62,7 +63,7 @@ const Product = ({ id, title, price, description, image }) => {
         <ImgWrapper>
           <img src={image} />
         </ImgWrapper>
-        <p className="price">{price + ' €'}</p>
+        <p className="price">{price.toFixed(2) + ' €'}</p>
         <div className="btn-wrapper">
           <StyledButton onClick={() => dispatch(incrementAction(id))}>
             add to cart
