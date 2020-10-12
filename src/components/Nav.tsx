@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, createContext } from 'react'
 import styled from 'styled-components'
 import { Container } from './Container'
 import { FiShoppingCart } from 'react-icons/fi'
@@ -42,9 +42,13 @@ const StyledLink = styled.a`
     background: rgb(142 215 140);
   }
 `
-
+export const NavContext = createContext<{
+  isOpen?: boolean
+  setIsOpen?: (isOpen: boolean) => void
+}>({})
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const cartSwitchState = { isOpen, setIsOpen }
   const cartState = useSelector((state) => state.cart)
   return (
     <NavWrapper>
@@ -60,7 +64,11 @@ const Nav = () => {
             {cartState.length > 0 && (
               <span className="cart-length">{cartState.length}</span>
             )}
-            {isOpen && <Cart />}
+            {isOpen && (
+              <NavContext.Provider value={cartSwitchState}>
+                <Cart />
+              </NavContext.Provider>
+            )}
           </span>
         </StyledNav>
       </Container>

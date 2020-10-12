@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import CarItem from './CartItem'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { selectProductItem, computeTotalCart } from '../util'
+
 const StyledDiv = styled.div`
   padding: 2rem;
   position: absolute;
@@ -43,24 +44,23 @@ const StyledDivEmpyCart = styled.div`
   box-shadow: #aabdb4 0px 0px 6px 1px;
 `
 const StyledUl = styled.ul``
-const Cart = ({ state }) => {
-  console.log(state(), 'car state')
+const Cart = () => {
+  const state = useSelector((state) => state)
 
-  return state().cart.length ? (
+  console.log(state.cart, 'car state')
+
+  return state.cart.length ? (
     <StyledDiv>
       <StyledUl>
-        {state().cart.map((cartItem, i) => {
-          const product = selectProductItem(
-            state().products,
-            cartItem.productId
-          )
+        {state.cart.map((cartItem, i) => {
+          const product = selectProductItem(state.products, cartItem.productId)
           return <CarItem product={product} key={i} cartItem={cartItem} />
         })}
       </StyledUl>
       <div className="result">
         <p>
           <span className="result__total">total:</span>{' '}
-          {computeTotalCart(state())}
+          {computeTotalCart(state)}
         </p>
       </div>
     </StyledDiv>
@@ -71,12 +71,4 @@ const Cart = ({ state }) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    state() {
-      return state
-    }
-  }
-}
-
-export default connect(mapStateToProps)(Cart)
+export default Cart

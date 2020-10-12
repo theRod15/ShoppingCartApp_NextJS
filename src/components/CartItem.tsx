@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { MdAddCircle } from 'react-icons/md'
 import { HiMinusCircle } from 'react-icons/hi'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { decrementAction, incrementAction, removeProduct } from '../actions'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { NavContext } from './Nav'
+import { selectIdItem } from '../util'
 
 const StyledLi = styled.li`
   padding: 1rem 2rem;
@@ -39,13 +41,28 @@ const StyledLi = styled.li`
   }
 `
 
-const CartItem = ({
-  product,
-  cartItem,
-  addProduct,
-  subtractProduct,
-  removeCartItem
-}) => {
+const CartItem = ({ product, cartItem }) => {
+  const dispatch = useDispatch()
+  const cartState = useSelector((state) => state.cart)
+  const { isOpen, setIsOpen } = useContext(NavContext)
+  const addProduct = (id) => dispatch(incrementAction(id))
+  const closeIfEmpty = () => {
+    if (cartState.length === 1) {
+      setIsOpen(!isOpen)
+    }
+  }
+
+  const subtractProduct = (id) => {
+    const product = selectIdItem(cartState, id)
+    if (product.amount <= 1) return
+    dispatch(decrementAction(id))
+  }
+
+  const removeCartItem = (id) => {
+    dispatch(removeProduct(id))
+    closeIfEmpty()
+  }
+
   return (
     <StyledLi>
       <div className="cart-items">
@@ -74,18 +91,5 @@ const CartItem = ({
     </StyledLi>
   )
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addProduct(id) {
-      dispatch(incrementAction(id))
-    },
-    subtractProduct(id) {
-      dispatch(decrementAction(id))
-    },
-    removeCartItem(id) {
-      dispatch(removeProduct(id))
-    }
-  }
-}
 
-export default connect(null, mapDispatchToProps)(CartItem)
+export default CartItem
