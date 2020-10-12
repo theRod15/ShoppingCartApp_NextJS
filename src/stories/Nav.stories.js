@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import Nav from '../components/Nav'
 import { Provider, useDispatch } from 'react-redux'
-import store from '../store'
-import { getInitialState, incrementAction } from '../actions'
+
+import { incrementAction } from '../actions'
 import Header from '../components/Header'
+import { useInitStore } from './lib'
 
 export default {
   title: 'Complete Header',
@@ -11,12 +12,7 @@ export default {
 }
 
 export const SimpleNav = () => {
-  useEffect(() => {
-    ;(async () => {
-      store.dispatch(getInitialState())
-    })()
-  }, [])
-
+  const store = useInitStore()
   return (
     <Provider store={store}>
       <Header />
@@ -26,9 +22,10 @@ export const SimpleNav = () => {
 }
 
 const TestDispatcher = () => {
+  const dispatch = useDispatch()
   const ButtonDispatcher = ({ id }) => (
     <button
-      onClick={() => store.dispatch(incrementAction(id))}
+      onClick={() => dispatch(incrementAction(id))}
     >{`add product ${id}`}</button>
   )
   let n = 1

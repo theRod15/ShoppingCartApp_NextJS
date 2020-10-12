@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { getInitialState } from '../actions'
+import React from 'react'
 import { Container } from '../components/Container'
-import { Provider, useDispatch } from 'react-redux'
+import { Provider } from 'react-redux'
 import ShowCase from '../components/ShowCase'
-
-/* import store from '../../data/products' */
-import store from '../store'
+import { useInitStore } from './lib'
 
 export default {
   title: 'product ShowCase',
@@ -13,12 +10,8 @@ export default {
 }
 
 export const ShowcaseWrapper = () => {
-  useEffect(() => {
-    ;(async () => {
-      await store.dispatch(getInitialState())
-      console.log('initial state', store.getState())
-    })()
-  }, [])
+  const store = useInitStore()
+
   return (
     <Provider store={store}>
       <Container>
