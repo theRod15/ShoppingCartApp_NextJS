@@ -4,6 +4,7 @@ import { Container } from './Container'
 import { FiShoppingCart } from 'react-icons/fi'
 import Cart from './Cart'
 import { useSelector } from 'react-redux'
+import Link from 'next/link'
 
 const NavWrapper = styled.div`
   background-color: lightgreen;
@@ -30,7 +31,7 @@ const StyledNav = styled.nav`
     }
   }
 `
-const StyledLink = styled.a`
+const StyledLink = styled.span`
   display: block;
   font-weight: bold;
   padding: 1.65rem 1rem;
@@ -57,7 +58,13 @@ const Nav = () => {
           {Array(3)
             .fill('menu-item')
             .map((e, i) => {
-              return <StyledLink key={i}>{e}</StyledLink>
+              return i === 0 ? (
+                <Link href="/">
+                  <StyledLink key={i}>Home</StyledLink>
+                </Link>
+              ) : (
+                <StyledLink key={i}>{e}</StyledLink>
+              )
             })}
           <span className="cart-icon">
             <FiShoppingCart onClick={() => setIsOpen(!isOpen)} />
