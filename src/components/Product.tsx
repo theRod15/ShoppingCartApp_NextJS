@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { incrementAction } from '../actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectIdItem } from '../util'
-
+import Link from 'next/link'
 const StyledDiv = styled.div`
   text-align: center;
   background: rgb(250 251 253);
@@ -13,6 +13,9 @@ const StyledDiv = styled.div`
     font-size: 1.25rem;
     font-weight: bold;
     text-align: center;
+  }
+  .detail-button-wrapper {
+    text-align: left;
   }
 `
 const ColDiv = styled.div`
@@ -55,6 +58,17 @@ const ImgWrapper = styled.figure`
     height: 100%;
   }
 `
+
+const DetailButton = styled.button`
+  margin: 2rem 0 0 1rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 1rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  cursor: pointer;
+  background: rgb(255 179 41);
+  color: hsl(0deg 1% 15%);
+`
 const Product = ({ id, title, price, description, image }) => {
   const dispatch = useDispatch()
   const cartState = useSelector((state) => state.cart)
@@ -76,6 +90,11 @@ const Product = ({ id, title, price, description, image }) => {
           >
             add to cart
           </StyledButton>
+        </div>
+        <div className="detail-button-wrapper">
+          <DetailButton>
+            <Link href={`detail/${id}`}>detail page</Link>
+          </DetailButton>
         </div>
       </StyledDiv>
     </ColDiv>
