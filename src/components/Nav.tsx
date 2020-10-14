@@ -2,9 +2,11 @@ import React, { useState, createContext } from 'react'
 import styled from 'styled-components'
 import { Container } from './Container'
 import { FiShoppingCart } from 'react-icons/fi'
+import { HiMenu } from 'react-icons/hi'
 import Cart from './Cart'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
+import ResMenu from './ResMenu'
 
 const NavWrapper = styled.div`
   background-color: lightgreen;
@@ -12,10 +14,14 @@ const NavWrapper = styled.div`
 const StyledNav = styled.nav`
   display: flex;
   align-items: center;
+  padding: 1rem 0;
+  @media (min-width: 560px) {
+    padding: 0;
+  }
   .cart-icon {
     margin-left: auto;
     cursor: pointer;
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     position: relative;
     .cart-length {
       position: absolute;
@@ -30,8 +36,14 @@ const StyledNav = styled.nav`
       line-height: 1.3;
     }
   }
+  .link-wrapper {
+    display: none;
+    @media (min-width: 560px) {
+      display: flex;
+    }
+  }
 `
-const StyledLink = styled.span`
+export const StyledLink = styled.span`
   display: block;
   font-weight: bold;
   padding: 1.65rem 1rem;
@@ -43,6 +55,7 @@ const StyledLink = styled.span`
     background: rgb(142 215 140);
   }
 `
+
 export const NavContext = createContext<{
   isOpen?: boolean
   setIsOpen?: (isOpen: boolean) => void
@@ -55,17 +68,21 @@ const Nav = () => {
     <NavWrapper>
       <Container>
         <StyledNav>
-          {Array(3)
-            .fill('menu-item')
-            .map((e, i) => {
-              return i === 0 ? (
-                <Link href="/">
-                  <StyledLink key={i}>Home</StyledLink>
-                </Link>
-              ) : (
-                <StyledLink key={i}>{e}</StyledLink>
-              )
-            })}
+          <ResMenu />
+          <div className="link-wrapper">
+            {Array(3)
+              .fill('menu-item')
+              .map((e, i) => {
+                return i === 0 ? (
+                  <Link href="/">
+                    <StyledLink key={i}>Home</StyledLink>
+                  </Link>
+                ) : (
+                  <StyledLink key={i}>{e}</StyledLink>
+                )
+              })}
+          </div>
+
           <span className="cart-icon">
             <FiShoppingCart onClick={() => setIsOpen(!isOpen)} />
             {cartState.length > 0 && (

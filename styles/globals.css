@@ -41,3 +41,7 @@ img {
   display: flex;
   justify-content: space-evenly;
 }
+:root {
+  --nav-color: lightgreen;
+  --res-menu-border-color: rgb(231 192 120);
+}
