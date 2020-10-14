@@ -1,14 +1,14 @@
 import Layout from '../../src/components/Layout'
 import Axios from 'axios'
 import styled from 'styled-components'
-
+import { useStore } from 'react-redux'
 const Wrapper = styled.div`
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     display: flex;
   }
   margin: 2rem 0;
   .product-info {
-    @media (min-width: 768px) {
+    @media (min-width: 1024px) {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -18,14 +18,19 @@ const Wrapper = styled.div`
 const Col = styled.div`
   padding: 2rem;
   margin: 0 1rem;
-  @media (min-width: 768px) {
+  @media (min-width: 1024px) {
     margin: 1rem 0 0;
     width: 50%;
   }
 
   .product-info__description {
-    font-size: 1.8rem;
+    font-size: 1.45rem;
     line-height: 1.6;
+  }
+  @media (min-width: 768px) {
+    .product-info__description  {
+      font-size: 1.8rem;
+    }
   }
   .product-info__price {
     text-align: center;
@@ -33,13 +38,23 @@ const Col = styled.div`
     font-weight: bold;
     margin-top: 5rem;
   }
-  @media (min-width: 768px) {
-    margin: 1rem 0 0;
-    width: 50%;
-  }
-  figure {
+  &.product-showcase {
     text-align: center;
+    h1 {
+      line-height: 1.5;
+      @media (min-width: 1024px) {
+        font-size: 2.2rem;
+      }
+    }
+  }
+
+  figure {
     margin-top: 3rem;
+  }
+  &:first-child {
+    @media (min-width: 1024px) {
+      margin-right: 6rem;
+    }
   }
 `
 const AddCartButton = styled.button`
@@ -54,8 +69,6 @@ const AddCartButton = styled.button`
 `
 
 const Detail = ({ data }) => {
-  console.log(data, 'detail data from component')
-
   return (
     <Layout>
       <Wrapper>
@@ -83,7 +96,6 @@ Detail.getInitialProps = async ({ req, query }) => {
   const { data } = await Axios.get(
     `https://fakestoreapi.com/products/${query.id}`
   )
-  console.log(data, 'data from detail')
 
   return { data }
 }
