@@ -34,9 +34,12 @@ const Col = styled.div`
   }
   .product-info__price {
     text-align: center;
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-top: 5rem;
+    @media (min-width: 450px) {
+      font-size: 3rem;
+    }
   }
   &.product-showcase {
     text-align: center;

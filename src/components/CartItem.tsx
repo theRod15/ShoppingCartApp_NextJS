@@ -9,7 +9,10 @@ import { NavContext } from './Nav'
 import { selectIdItem } from '../util'
 
 const StyledLi = styled.li`
-  padding: 1rem 2rem;
+  padding: 1rem 1rem;
+  @media (min-width: 450px) {
+    padding: 1rem 2rem;
+  }
   margin: 1rem 0;
   position: relative;
   background: rgb(212 238 212);
@@ -17,6 +20,7 @@ const StyledLi = styled.li`
   .cart-items {
     display: flex;
     fex-wrap: wrap;
+    justify-content: space-evenly;
     align-items: center;
     figure {
       max-width: 35px;
@@ -24,8 +28,20 @@ const StyledLi = styled.li`
         height: 45px;
       }
     }
+    .button-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      @media (min-width: 450px) {
+        flex-direction: row;
+      }
+    }
     .cart-items__buttons {
-      margin: 0 1rem;
+      display: flex;
+      margin: 0.5rem 1rem 0;
+      @media (min-width: 450px) {
+        margin: 0 1rem;
+      }
       .units {
         margin: 0 0.5rem;
       }
@@ -66,20 +82,23 @@ const CartItem = ({ product, cartItem }) => {
   return (
     <StyledLi>
       <div className="cart-items">
-        <figure>
-          <img src={product.image} alt="product-item" />
-        </figure>
-        <div className="cart-items__buttons">
-          <MdAddCircle
-            onClick={(e) => addProduct(product.id)}
-            className="action-icon"
-          />
-          <span className="units">{cartItem.amount}</span>
-          <HiMinusCircle
-            onClick={(e) => subtractProduct(product.id)}
-            className="action-icon"
-          />
+        <div className="button-wrapper">
+          <figure>
+            <img src={product.image} alt="product-item" />
+          </figure>
+          <div className="cart-items__buttons">
+            <MdAddCircle
+              onClick={(e) => addProduct(product.id)}
+              className="action-icon"
+            />
+            <span className="units">{cartItem.amount}</span>
+            <HiMinusCircle
+              onClick={(e) => subtractProduct(product.id)}
+              className="action-icon"
+            />
+          </div>
         </div>
+
         <div className="cart-items__price">{`${(
           cartItem.amount * product.price
         ).toFixed(2)} €`}</div>

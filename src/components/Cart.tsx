@@ -11,10 +11,10 @@ const StyledDiv = styled.div`
   top: 2rem;
   border-radius: 1rem;
   right: 0;
-  min-width: 400px;
+  width: 80vw;
+  max-width: 400px;
   background: rgb(240 249 244);
   box-shadow: #aabdb4 0px 0px 6px 1px;
-  max-width: 80vh;
   overflow: scroll;
   .result {
     padding-left: 2rem;
@@ -22,6 +22,7 @@ const StyledDiv = styled.div`
     font-weight: bold;
     color: rgb(75 73 73);
     .result__total {
+      line-height: 1.45;
       text-transform: uppercase;
       font-size: 2rem;
       margin-right: 1rem;
@@ -33,7 +34,8 @@ const StyledDivEmpyCart = styled.div`
   position: absolute;
   top: 2rem;
   right: 0;
-  min-width: 400px;
+  width: 80vw;
+  max-width: 400px;
   background: rgb(240 249 244);
   text-align: center;
   border-radius: 0.75rem;
