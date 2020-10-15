@@ -7,6 +7,7 @@ import Cart from './Cart'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import ResMenu from './ResMenu'
+import { responsiveMenuState, cartStateType } from '../types'
 
 const NavWrapper = styled.div`
   background-color: lightgreen;
@@ -56,19 +57,24 @@ export const StyledLink = styled.span`
   }
 `
 
-export const NavContext = createContext<{
-  isOpen?: boolean
-  setIsOpen?: (isOpen: boolean) => void
-}>({})
+export const NavContext = createContext<cartStateType | object>({})
+
 const Nav = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const cartSwitchState = { isOpen, setIsOpen }
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const cartSwitchState: cartStateType = { isCartOpen, setIsCartOpen }
+  const [isResMenuOpen, setIsResMenuOpen] = useState(false)
+  const resMenuState: responsiveMenuState = { isResMenuOpen, setIsResMenuOpen }
+  const navState: {
+    cartSwitchState: cartStateType
+    resMenuState: responsiveMenuState
+  } = { cartSwitchState, resMenuState }
+
   const cartState = useSelector((state) => state.cart)
   return (
     <NavWrapper>
       <Container>
         <StyledNav>
-          <ResMenu />
+          <ResMenu {...navState} />
           <div className="link-wrapper">
             {Array(3)
               .fill('menu-item')
@@ -84,11 +90,18 @@ const Nav = () => {
           </div>
 
           <span className="cart-icon">
-            <FiShoppingCart onClick={() => setIsOpen(!isOpen)} />
+            <FiShoppingCart
+              onClick={() => {
+                if (isResMenuOpen) {
+                  setIsResMenuOpen(!isResMenuOpen)
+                }
+                setIsCartOpen(!isCartOpen)
+              }}
+            />
             {cartState.length > 0 && (
               <span className="cart-length">{cartState.length}</span>
             )}
-            {isOpen && (
+            {isCartOpen && (
               <NavContext.Provider value={cartSwitchState}>
                 <Cart />
               </NavContext.Provider>

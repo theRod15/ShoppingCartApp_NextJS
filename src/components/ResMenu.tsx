@@ -3,6 +3,7 @@ import { HiMenu } from 'react-icons/hi'
 import { StyledLink } from './Nav'
 import Link from 'next/link'
 import styled from 'styled-components'
+import { responsiveMenuState, cartStateType } from '../types'
 
 const StyledSpan = styled.span`
   display: block;
@@ -35,12 +36,25 @@ const StyledList = styled.ul`
     border-bottom: 5px solid var(--res-menu-border-color);
   }
 `
-export default () => {
-  const [isOpen, setIsOpen] = useState(false)
+export default ({
+  resMenuState,
+  cartSwitchState
+}: {
+  resMenuState: responsiveMenuState
+  cartSwitchState: cartStateType
+}) => {
   return (
     <StyledSpan>
-      <HiMenu className="menu-icon" onClick={() => setIsOpen(!isOpen)} />
-      {isOpen && (
+      <HiMenu
+        className="menu-icon"
+        onClick={() => {
+          if (cartSwitchState.isCartOpen) {
+            cartSwitchState.setIsCartOpen(!cartSwitchState.isCartOpen)
+          }
+          resMenuState.setIsResMenuOpen(!resMenuState.isResMenuOpen)
+        }}
+      />
+      {resMenuState.isResMenuOpen && (
         <StyledList>
           {Array(3)
             .fill('menu-item')

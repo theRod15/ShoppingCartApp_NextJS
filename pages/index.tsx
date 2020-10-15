@@ -2,6 +2,7 @@ import Layout from '../src/components/Layout'
 import ShowCase from '../src/components/ShowCase'
 import { initStore } from '../src/store'
 import { getInitialState } from '../src/actions'
+import { Dispatch } from 'redux'
 
 const Index = (props) => {
   console.log(props, 'from index')
