@@ -13,17 +13,34 @@ import {
 } from '../constants'
 import { selectIdItem } from '../util'
 
-const incrementStock = (id) => ({ type: INCREMENT_STOCK, id })
+import { CartAction, Product } from '../types'
+import { Dispatch, Action, AnyAction, ActionCreator } from 'redux'
 
-const decrementStock = (id) => ({ type: DECREMENT_STOCK, id })
+const incrementStock: (id: number) => CartAction = (id) => ({
+  type: INCREMENT_STOCK,
+  id
+})
 
-const incrementAmount = (id) => ({ type: INCREMENT_AMOUNT, id })
+const decrementStock: (id: number) => CartAction = (id) => ({
+  type: DECREMENT_STOCK,
+  id
+})
 
-const decrementAmount = (id) => ({ type: DECREMENT_AMOUNT, id })
+const incrementAmount: (id: number) => CartAction = (id) => ({
+  type: INCREMENT_AMOUNT,
+  id
+})
+
+const decrementAmount: (id: number) => CartAction = (id) => ({
+  type: DECREMENT_AMOUNT,
+  id
+})
 
 export const getInitialState = () => async (dispatch) => {
   try {
-    const { data } = await Axios.get('https://fakestoreapi.com/products')
+    const { data }: { data: { products: Product[] } } = await Axios.get(
+      'https://fakestoreapi.com/products'
+    )
     console.log(data, 'initial state ')
 
     dispatch({ type: FILL_INITIAL_STATE, payload: data })
@@ -32,7 +49,7 @@ export const getInitialState = () => async (dispatch) => {
   }
 }
 
-export const checkOut = () => ({ type: CHECKOUT })
+export const checkOut: () => Action<string> = () => ({ type: CHECKOUT })
 
 export const incrementAction = (id) => (dispatch, getState) => {
   const { stock } = getState()
@@ -50,6 +67,13 @@ export const decrementAction = (id) => (dispatch, getState) => {
   }
 }
 
-export const removeProduct = (id) => ({ type: REMOVE_PRODUCT, id })
-export const startLoading = () => ({ type: START_LOADING })
-export const endLoading = () => ({ type: END_LOADING })
+export const removeProduct: ActionCreator<Action<string>> = (id) => ({
+  type: REMOVE_PRODUCT,
+  id
+})
+export const startLoading: ActionCreator<Action<string>> = () => ({
+  type: START_LOADING
+})
+export const endLoading: ActionCreator<Action<string>> = () => ({
+  type: END_LOADING
+})

@@ -3,7 +3,7 @@ import { HiMenu } from 'react-icons/hi'
 import { StyledLink } from './Nav'
 import Link from 'next/link'
 import styled from 'styled-components'
-import { responsiveMenuState, cartStateType } from '../types'
+import { ResponsiveMenuState, CartStateType } from '../types'
 
 const StyledSpan = styled.span`
   display: block;
@@ -40,8 +40,8 @@ export default ({
   resMenuState,
   cartSwitchState
 }: {
-  resMenuState: responsiveMenuState
-  cartSwitchState: cartStateType
+  resMenuState: ResponsiveMenuState
+  cartSwitchState: CartStateType
 }) => {
   return (
     <StyledSpan>

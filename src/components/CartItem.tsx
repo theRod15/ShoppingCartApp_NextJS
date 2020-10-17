@@ -7,7 +7,7 @@ import { decrementAction, incrementAction, removeProduct } from '../actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavContext } from './Nav'
 import { selectIdItem } from '../util'
-import { cartStateType } from '../types'
+import { CartStateType } from '../types'
 
 const StyledLi = styled.li`
   padding: 1rem 1rem;
@@ -65,8 +65,8 @@ const CartItem = ({ product, cartItem }) => {
     isCartOpen,
     setIsCartOpen
   }: { isCartOpen: boolean; setIsCartOpen: (boolean) => void } = useContext<
-    cartStateType
-  >(NavContext as React.Context<cartStateType>)
+    CartStateType
+  >(NavContext as React.Context<CartStateType>)
   const addProduct = (id) => dispatch(incrementAction(id))
   const closeIfEmpty = () => {
     if (cartState.length === 1) {

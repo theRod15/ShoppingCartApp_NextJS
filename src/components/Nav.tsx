@@ -7,7 +7,7 @@ import Cart from './Cart'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import ResMenu from './ResMenu'
-import { responsiveMenuState, cartStateType } from '../types'
+import { ResponsiveMenuState, CartStateType } from '../types'
 
 const NavWrapper = styled.div`
   background-color: lightgreen;
@@ -57,16 +57,16 @@ export const StyledLink = styled.span`
   }
 `
 
-export const NavContext = createContext<cartStateType | object>({})
+export const NavContext = createContext<CartStateType | object>({})
 
 const Nav = () => {
   const [isCartOpen, setIsCartOpen] = useState(false)
-  const cartSwitchState: cartStateType = { isCartOpen, setIsCartOpen }
+  const cartSwitchState: CartStateType = { isCartOpen, setIsCartOpen }
   const [isResMenuOpen, setIsResMenuOpen] = useState(false)
-  const resMenuState: responsiveMenuState = { isResMenuOpen, setIsResMenuOpen }
+  const resMenuState: ResponsiveMenuState = { isResMenuOpen, setIsResMenuOpen }
   const navState: {
-    cartSwitchState: cartStateType
-    resMenuState: responsiveMenuState
+    cartSwitchState: CartStateType
+    resMenuState: ResponsiveMenuState
   } = { cartSwitchState, resMenuState }
 
   const cartState = useSelector((state) => state.cart)
