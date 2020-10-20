@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { FunctionComponent, useContext } from 'react'
 import styled from 'styled-components'
 import CarItem from './CartItem'
 import { useSelector } from 'react-redux'
@@ -46,7 +46,7 @@ const StyledDivEmpyCart = styled.div`
   box-shadow: #aabdb4 0px 0px 6px 1px;
 `
 const StyledUl = styled.ul``
-const Cart = () => {
+const Cart: FunctionComponent = () => {
   const state = useSelector((state) => state)
 
   console.log(state.cart, 'car state')

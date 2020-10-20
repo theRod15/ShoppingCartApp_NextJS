@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { FunctionComponent, useContext } from 'react'
 import styled from 'styled-components'
 import { MdAddCircle } from 'react-icons/md'
 import { HiMinusCircle } from 'react-icons/hi'
@@ -7,7 +7,8 @@ import { decrementAction, incrementAction, removeProduct } from '../actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavContext } from './Nav'
 import { selectIdItem } from '../util'
-import { CartStateType } from '../types'
+import { Cart, CartAction, CartStateType, Product, Store } from '../types'
+import { ThunkDispatch } from 'redux-thunk'
 
 const StyledLi = styled.li`
   padding: 1rem 1rem;
@@ -58,7 +59,10 @@ const StyledLi = styled.li`
   }
 `
 
-const CartItem = ({ product, cartItem }) => {
+const CartItem: FunctionComponent<{ product: Product; cartItem: Cart }> = ({
+  product,
+  cartItem
+}) => {
   const dispatch = useDispatch()
   const cartState = useSelector((state) => state.cart)
   const {
@@ -67,21 +71,22 @@ const CartItem = ({ product, cartItem }) => {
   }: { isCartOpen: boolean; setIsCartOpen: (boolean) => void } = useContext<
     CartStateType
   >(NavContext as React.Context<CartStateType>)
-  const addProduct = (id) => dispatch(incrementAction(id))
-  const closeIfEmpty = () => {
+  const addProduct: (id: number) => void = (id) =>
+    dispatch<ThunkDispatch<Store, any, CartAction>>(incrementAction(id))
+  const closeIfEmpty: () => void = () => {
     if (cartState.length === 1) {
       setIsCartOpen(!isCartOpen)
     }
   }
 
   const subtractProduct = (id) => {
-    const product = selectIdItem(cartState, id)
-    if (product.amount <= 1) return
+    const cartItem: Cart = selectIdItem(cartState, id) as Cart
+    if (cartItem.amount <= 1) return
     dispatch(decrementAction(id))
   }
 
-  const removeCartItem = (id) => {
-    dispatch(removeProduct(id))
+  const removeCartItem: (id) => void = (id) => {
+    dispatch<ThunkDispatch<Store, any, CartAction>>(removeProduct(id))
     closeIfEmpty()
   }
 

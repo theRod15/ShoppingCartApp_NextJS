@@ -2,6 +2,9 @@ import Layout from '../../src/components/Layout'
 import Axios from 'axios'
 import styled from 'styled-components'
 import { useStore } from 'react-redux'
+import { FunctionComponent } from 'react'
+import { Product } from '../../src/types'
+import { NextPage } from 'next'
 const Wrapper = styled.div`
   @media (min-width: 1024px) {
     display: flex;
@@ -71,7 +74,7 @@ const AddCartButton = styled.button`
   letter-spacing: 1px;
 `
 
-const Detail = ({ data }) => {
+const Detail: NextPage<{ data: Product }> = ({ data }) => {
   return (
     <Layout>
       <Wrapper>

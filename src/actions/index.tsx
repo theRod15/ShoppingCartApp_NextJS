@@ -13,8 +13,9 @@ import {
 } from '../constants'
 import { selectIdItem } from '../util'
 
-import { CartAction, Product } from '../types'
+import { CartAction, Product, Stock, Store } from '../types'
 import { Dispatch, Action, AnyAction, ActionCreator } from 'redux'
+import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 const incrementStock: (id: number) => CartAction = (id) => ({
   type: INCREMENT_STOCK,
@@ -36,7 +37,12 @@ const decrementAmount: (id: number) => CartAction = (id) => ({
   id
 })
 
-export const getInitialState = () => async (dispatch) => {
+export const getInitialState: () => ThunkAction<
+  Promise<void>,
+  Store,
+  any,
+  Action<string>
+> = () => async (dispatch) => {
   try {
     const { data }: { data: { products: Product[] } } = await Axios.get(
       'https://fakestoreapi.com/products'
@@ -51,15 +57,25 @@ export const getInitialState = () => async (dispatch) => {
 
 export const checkOut: () => Action<string> = () => ({ type: CHECKOUT })
 
-export const incrementAction = (id) => (dispatch, getState) => {
-  const { stock } = getState()
+export const incrementAction: (
+  id: number
+) => ThunkAction<void, Store, any, Action<string>> = (id) => (
+  dispatch,
+  getState
+) => {
+  const { stock }: { stock: Stock[] } = getState()
   if (selectIdItem(stock, id).stock > 0) {
     console.log('action-in')
     dispatch(decrementStock(id))
     dispatch(incrementAmount(id))
   }
 }
-export const decrementAction = (id) => (dispatch, getState) => {
+export const decrementAction: (
+  id: number
+) => ThunkAction<void, Store, any, Action<string>> = (id) => (
+  dispatch,
+  getState
+) => {
   const { cart } = getState()
   if (selectIdItem(cart, id) && selectIdItem(cart, id).amount > 0) {
     dispatch(incrementStock(id))

@@ -1,4 +1,11 @@
-import React, { useState, createContext } from 'react'
+import React, {
+  useState,
+  createContext,
+  Context,
+  FunctionComponent,
+  Dispatch,
+  SetStateAction
+} from 'react'
 import styled from 'styled-components'
 import { Container } from './Container'
 import { FiShoppingCart } from 'react-icons/fi'
@@ -7,7 +14,7 @@ import Cart from './Cart'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import ResMenu from './ResMenu'
-import { ResponsiveMenuState, CartStateType } from '../types'
+import { ResponsiveMenuState, CartStateType, Cart as CartT } from '../types'
 
 const NavWrapper = styled.div`
   background-color: lightgreen;
@@ -57,10 +64,15 @@ export const StyledLink = styled.span`
   }
 `
 
-export const NavContext = createContext<CartStateType | object>({})
+export const NavContext: Context<CartStateType | {}> = createContext<
+  CartStateType | object
+>({})
 
-const Nav = () => {
-  const [isCartOpen, setIsCartOpen] = useState(false)
+const Nav: FunctionComponent = () => {
+  const [isCartOpen, setIsCartOpen]: [
+    boolean,
+    Dispatch<SetStateAction<boolean>>
+  ] = useState(false)
   const cartSwitchState: CartStateType = { isCartOpen, setIsCartOpen }
   const [isResMenuOpen, setIsResMenuOpen] = useState(false)
   const resMenuState: ResponsiveMenuState = { isResMenuOpen, setIsResMenuOpen }
@@ -69,7 +81,7 @@ const Nav = () => {
     resMenuState: ResponsiveMenuState
   } = { cartSwitchState, resMenuState }
 
-  const cartState = useSelector((state) => state.cart)
+  const cartState: CartT[] = useSelector((state) => state.cart)
   return (
     <NavWrapper>
       <Container>

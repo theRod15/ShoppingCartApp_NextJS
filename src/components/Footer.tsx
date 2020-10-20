@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { Container } from './Container'
 
@@ -23,7 +23,7 @@ const StyledFooter = styled.footer`
     }
   }
 `
-const Footer = () => {
+const Footer: FunctionComponent = () => {
   return (
     <StyledFooter>
       <Container>

@@ -2,9 +2,12 @@ import Layout from '../src/components/Layout'
 import ShowCase from '../src/components/ShowCase'
 import { initStore } from '../src/store'
 import { getInitialState } from '../src/actions'
-import { Dispatch } from 'redux'
+import { ThunkDispatch } from 'redux-thunk'
+import { InitialState, Store } from '../src/types'
+import { Action, AnyAction } from 'redux'
+import { NextPage } from 'next'
 
-const Index = (props) => {
+const Index: NextPage<{ store: Store }> = (props) => {
   console.log(props, 'from index')
 
   return (
@@ -17,7 +20,9 @@ const Index = (props) => {
 Index.getInitialProps = async ({ req }) => {
   let localStore = initStore()
 
-  await localStore.dispatch(getInitialState())
+  await localStore.dispatch<ThunkDispatch<Store, any, InitialState>>(
+    getInitialState()
+  )
 
   const store = localStore.getState()
 

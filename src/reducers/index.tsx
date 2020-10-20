@@ -2,8 +2,14 @@ import stock from './stock'
 import cart from './cart'
 import products from './products'
 
-import { combineReducers } from 'redux'
+import { Action, combineReducers, Reducer } from 'redux'
 import loading from './loading'
+import { Store } from '../types'
 
-const store = combineReducers({ cart, stock, products, loading })
-export default store
+const storeReducer: Reducer<Store, Action<string>> = combineReducers({
+  cart,
+  stock,
+  products,
+  loading
+})
+export default storeReducer

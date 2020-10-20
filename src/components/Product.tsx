@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 
 import styled from 'styled-components'
 import { incrementAction } from '../actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectIdItem } from '../util'
 import Link from 'next/link'
+import { Cart, Product as ProductT } from '../types'
+
 const StyledDiv = styled.div`
   text-align: center;
   background: rgb(250 251 253);
@@ -69,9 +71,15 @@ const DetailButton = styled.button`
   background: rgb(255 179 41);
   color: hsl(0deg 1% 15%);
 `
-const Product = ({ id, title, price, description, image }) => {
+const Product: FunctionComponent<ProductT> = ({
+  id,
+  title,
+  price,
+  description,
+  image
+}) => {
   const dispatch = useDispatch()
-  const cartState = useSelector((state) => state.cart)
+  const cartState: Cart[] = useSelector((state) => state.cart)
   return (
     <ColDiv>
       <StyledDiv>
@@ -83,7 +91,7 @@ const Product = ({ id, title, price, description, image }) => {
         <div className="btn-wrapper">
           <StyledButton
             onClick={() => {
-              const product = selectIdItem(cartState, id)
+              const product: Cart = selectIdItem(cartState, id)
               if (product) return
               dispatch(incrementAction(id))
             }}

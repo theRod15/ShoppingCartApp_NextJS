@@ -1,3 +1,4 @@
+import { Reducer } from 'redux'
 import {
   INCREMENT_AMOUNT,
   DECREMENT_AMOUNT,
@@ -5,9 +6,10 @@ import {
   REMOVE_PRODUCT,
   CART_TOTAL
 } from '../constants'
+import { Cart, CartAction } from '../types'
 import { selectIdItem } from '../util'
 
-const cartReducer = (cart = [], action) => {
+const cartReducer: Reducer<Cart[], CartAction> = (cart = [], action) => {
   const { type, id } = action
   switch (type) {
     case INCREMENT_AMOUNT:

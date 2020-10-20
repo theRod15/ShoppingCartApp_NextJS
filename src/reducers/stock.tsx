@@ -1,6 +1,11 @@
+import { Action, Reducer } from 'redux'
 import { INCREMENT_STOCK, DECREMENT_STOCK } from '../constants'
+import { Stock, StockAction } from '../types'
 
-const productReducer = (stockState = [], action) => {
+const productReducer: Reducer<Stock[], StockAction> = (
+  stockState = [],
+  action
+) => {
   const { type, id } = action
   switch (type) {
     case INCREMENT_STOCK:

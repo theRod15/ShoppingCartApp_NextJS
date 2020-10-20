@@ -3,13 +3,14 @@ import { Container } from './Container'
 import Footer from './Footer'
 import { useSelector } from 'react-redux'
 import Loader from './Loader'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { FunctionComponent, useEffect } from 'react'
+import { NextRouter, useRouter } from 'next/router'
+import { Store } from '../types'
 
-const Layout = ({ children }) => {
-  const loadState = useSelector((state) => state.loading)
-  const router = useRouter()
-  const store = useSelector((state) => state)
+const Layout: FunctionComponent = ({ children }) => {
+  const loadState: boolean = useSelector((state) => state.loading)
+  const router: NextRouter = useRouter()
+  const store: Store = useSelector((state) => state)
   useEffect(() => {
     const serializeState = () => {
       console.log('serialize state')

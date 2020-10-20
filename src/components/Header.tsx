@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import styled from 'styled-components'
 import { Container } from './Container'
 import Nav from './Nav'
@@ -22,7 +22,7 @@ const StyledHeader = styled.header`
   }
 `
 
-const Header = () => (
+const Header: FunctionComponent = () => (
   <StyledHeader>
     <Container>
       <div className="header-wrapper">

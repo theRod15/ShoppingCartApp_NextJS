@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FunctionComponent, ReactElement } from 'react'
 import { HiMenu } from 'react-icons/hi'
 import { StyledLink } from './Nav'
 import Link from 'next/link'
@@ -36,13 +36,10 @@ const StyledList = styled.ul`
     border-bottom: 5px solid var(--res-menu-border-color);
   }
 `
-export default ({
-  resMenuState,
-  cartSwitchState
-}: {
+const ResMenu: FunctionComponent<{
   resMenuState: ResponsiveMenuState
   cartSwitchState: CartStateType
-}) => {
+}> = ({ resMenuState, cartSwitchState }) => {
   return (
     <StyledSpan>
       <HiMenu
@@ -78,3 +75,5 @@ export default ({
     </StyledSpan>
   )
 }
+
+export default ResMenu

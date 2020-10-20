@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 
 import styled from 'styled-components'
 import Product from './Product'
 import { useSelector } from 'react-redux'
-
+import { Product as ProductT } from '../types'
 const StyledDiv = styled.div`
   display: block;
   @media (min-width: 768px) {
@@ -14,8 +14,8 @@ const StyledDiv = styled.div`
   }
 `
 
-const ShowCase = () => {
-  const products = useSelector((state) => state.products)
+const ShowCase: FunctionComponent = () => {
+  const products: ProductT[] = useSelector((state) => state.products)
 
   return (
     <StyledDiv>

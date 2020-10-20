@@ -1,8 +1,14 @@
-export const selectIdItem = (stateSlice, id) =>
-  stateSlice.find((e) => e.productId === id)
+import { Cart, Product, Stock, Store } from '../types'
 
-export const selectProductItem = (products, id) =>
-  products.find((e) => e.id === id)
+export const selectIdItem: <T extends { productId: number }>(
+  stateSlice: T[],
+  id: number
+) => T = (stateSlice, id) => stateSlice.find((e) => e.productId === id)
+
+export const selectProductItem: (products: Product[], id: number) => Product = (
+  products,
+  id
+) => products.find((e) => e.id === id)
 
 export function pageButtons(data, itemsPerPage = 6) {
   const totalProducts = data.length
@@ -27,7 +33,7 @@ export function padDigits(pattern, number) {
   const nbs = '&nbs'
   return nbs.repeat(2) + number
 }
-export const computeTotalCart = (store) => {
+export const computeTotalCart: (store: Store) => string = (store) => {
   const total = store.cart.reduce((computed, current) => {
     const product = selectProductItem(store.products, current.productId)
 
