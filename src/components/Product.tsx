@@ -10,7 +10,7 @@ import { Cart, Product as ProductT } from '../types'
 const StyledDiv = styled.div`
   text-align: center;
   background: rgb(250 251 253);
-  padding: 1rem 0;
+  padding: 1rem;
   .price {
     font-size: 1.25rem;
     font-weight: bold;
