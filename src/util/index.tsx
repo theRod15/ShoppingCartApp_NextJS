@@ -1,8 +1,9 @@
-import { Cart, Product, Stock, Store } from '../types'
-import { useStore } from 'react-redux'
-import Axios from 'axios'
+import { Product, Store } from '../types'
+
 import { initStore } from '../store'
 import { getInitialState } from '../actions'
+import { ThunkAction, ThunkDispatch } from 'redux-thunk'
+import { Action } from 'redux'
 
 export const selectIdItem: <T extends { productId: number }>(
   stateSlice: T[],
@@ -54,7 +55,9 @@ export const useClientStore: () => Store = () => {
 export const serverStore: () => Promise<any> = async () => {
   const store = initStore()
 
-  await store.dispatch(getInitialState())
+  await store.dispatch<ThunkDispatch<Store, any, Action<string>>>(
+    getInitialState()
+  )
 
   return store.getState()
 }
