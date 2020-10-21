@@ -1,10 +1,12 @@
 import Layout from '../../src/components/Layout'
 import Axios from 'axios'
 import styled from 'styled-components'
-import { useStore } from 'react-redux'
-import { FunctionComponent } from 'react'
-import { Product } from '../../src/types'
+import { useStore, useDispatch } from 'react-redux'
+import { FunctionComponent, useEffect } from 'react'
+import { Product, Store } from '../../src/types'
 import { NextPage } from 'next'
+import { incrementAction } from '../../src/actions'
+import { makeStore, serverStore, useClientStore } from '../../src/util'
 const Wrapper = styled.div`
   @media (min-width: 1024px) {
     display: flex;
@@ -75,6 +77,8 @@ const AddCartButton = styled.button`
 `
 
 const Detail: NextPage<{ data: Product }> = ({ data }) => {
+  const dispatch = useDispatch()
+
   return (
     <Layout>
       <Wrapper>
@@ -90,7 +94,9 @@ const Detail: NextPage<{ data: Product }> = ({ data }) => {
             2
           )} €`}</div>
           <div className="button-wrapper">
-            <AddCartButton>add to cart</AddCartButton>
+            <AddCartButton onClick={(e) => dispatch(incrementAction(data.id))}>
+              add to cart
+            </AddCartButton>
           </div>
         </Col>
       </Wrapper>
@@ -102,8 +108,8 @@ Detail.getInitialProps = async ({ req, query }) => {
   const { data } = await Axios.get(
     `https://fakestoreapi.com/products/${query.id}`
   )
-
-  return { data }
+  const store = await makeStore()
+  return { data, store }
 }
 
 export default Detail

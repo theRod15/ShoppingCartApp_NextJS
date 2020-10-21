@@ -1,4 +1,8 @@
 import { Cart, Product, Stock, Store } from '../types'
+import { useStore } from 'react-redux'
+import Axios from 'axios'
+import { initStore } from '../store'
+import { getInitialState } from '../actions'
 
 export const selectIdItem: <T extends { productId: number }>(
   stateSlice: T[],
@@ -41,4 +45,25 @@ export const computeTotalCart: (store: Store) => string = (store) => {
   }, 0)
 
   return `${total.toFixed(2)} €`
+}
+
+export const useClientStore: () => Store = () => {
+  return JSON.parse(localStorage.getItem('store'))
+}
+
+export const serverStore: () => Promise<any> = async () => {
+  const store = initStore()
+
+  await store.dispatch(getInitialState())
+
+  return store.getState()
+}
+
+export const makeStore: () => Promise<Store> = async () => {
+  let store
+  if (typeof window !== 'undefined') {
+    return (store = useClientStore())
+  }
+  store = await serverStore()
+  return store
 }
